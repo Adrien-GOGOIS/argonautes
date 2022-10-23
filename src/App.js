@@ -24,6 +24,14 @@ function App() {
     })
   }
 
+  const deleteMember = (member_id) => {
+    fetch(`http://localhost:8000/argonautes/${member_id}`, {
+      method: "DELETE"
+    }).then(
+      
+    )
+  }
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
@@ -47,19 +55,24 @@ function App() {
             placeholder="Charalampos" 
             {...register("name", { required: true, maxLength: 50, minLength: 1,})}
           />
+          <button type="submit">Envoyer</button>
           {errors.name && (
-                <span className="w-full text-red-600 italic text-xs absolute top-14">
+                <span className="">
                   Merci d'indiquer un nom de membre d'équipage entre 1 et 50 caractères
                 </span>
               )}
-          <button type="submit">Envoyer</button>
         </form>
         
         <h2>Membres de l'équipage</h2>
         <section className="member-list">
           {members && members.map((member) => {
             return (
+              <>
               <div key={member.name} className="member-item">{member.name}</div>
+                <button className="" onClick={() => deleteMember(member.member_id)}>
+                    X
+                </button>
+              </>  
             )
           })}
         </section>

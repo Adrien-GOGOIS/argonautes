@@ -27,7 +27,7 @@ app.get('/argonautes', async (_req, res) => {
           data: members.rows,
         });
     } catch (error) {
-        return res.status(400).json({ message: err });
+        return res.status(400).json({ message: error });
     }
 })
 
@@ -36,10 +36,22 @@ app.post('/argonautes', async (req, res) => {
         const name = req.body.name
         await argonautesService.createMember(name);
     } catch(error) {
-        return res.status(400).json({ message: err });
+        return res.status(400).json({ message: error });
     }
     return res.status(200).json({
             message: "Membres ajouté",
+        });
+})
+
+app.delete('/argonautes/:member_id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.member_id)
+        await argonautesService.deleteMember(id);
+    } catch(error) {
+        return res.status(400).json({ message: error });
+    }
+    return res.status(200).json({
+            message: "Membre supprimé",
         });
 })
 

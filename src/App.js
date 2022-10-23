@@ -12,9 +12,18 @@ function App() {
       .then((res) => {
         setMembers(res.data);
       });
-  }, []);
+  }, [members]);
 
-  
+  const onSubmit = (data) => {
+    fetch("http://localhost:8000/argonautes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(data),
+    })
+  }
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
@@ -29,7 +38,7 @@ function App() {
       <main>
         
         <h2>Ajouter un(e) Argonaute</h2>
-        <form className="new-member-form">
+        <form className="new-member-form" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nom de l&apos;Argonaute</label>
           <input 
             id="name" 
@@ -50,7 +59,7 @@ function App() {
         <section className="member-list">
           {members && members.map((member) => {
             return (
-              <div className="member-item">{member.name}</div>
+              <div key={member.name} className="member-item">{member.name}</div>
             )
           })}
         </section>

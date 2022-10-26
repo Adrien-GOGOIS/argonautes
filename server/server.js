@@ -31,10 +31,10 @@ app.get('/argonautes', async (_req, res) => {
     }
 })
 
-app.post('/argonautes', async (req, res) => {
+app.post('/argonautes', (req, res) => {
     try {
         const name = req.body.name
-        await argonautesService.createMember(name);
+        argonautesService.createMember(name);
     } catch(error) {
         return res.status(400).json({ message: error });
     }
@@ -43,10 +43,10 @@ app.post('/argonautes', async (req, res) => {
         });
 })
 
-app.delete('/argonautes/:member_id', async (req, res) => {
+app.delete('/argonautes/:member_id', (req, res) => {
     try {
         const id = parseInt(req.params.member_id)
-        await argonautesService.deleteMember(id);
+        argonautesService.deleteMember(id);
     } catch(error) {
         return res.status(400).json({ message: error });
     }
